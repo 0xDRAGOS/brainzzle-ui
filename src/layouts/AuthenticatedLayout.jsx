@@ -6,7 +6,14 @@ import {useContext} from "react";
 import {AuthContext} from "../context/AuthContext.jsx";
 
 export default function AuthenticatedLayout({ header, children }) {
-    const { isAuthenticated } = useContext(AuthContext);
+    const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+
+    const handleLogout = () => {
+        localStorage.removeItem('token')
+        localStorage.removeItem('role')
+        setIsAuthenticated(false);
+    }
+
     return (
         <div className="min-h-screen flex flex-col bg-slate-900">
             <nav className="bg-slate-950">
@@ -20,15 +27,28 @@ export default function AuthenticatedLayout({ header, children }) {
 
                         <div className="flex space-x-8 sm:-my-px sm:ms-10 sm:flex items-center">
                             {
-                                !isAuthenticated && (
+                                !isAuthenticated ? (
                                     <>
                                         <NavLink to="/login">Login</NavLink>
                                         <NavLink to="/register">Register</NavLink>
                                     </>
+                                ) : (
+                                    <>
+                                        <NavLink to="/profile">Profile</NavLink>
+                                        <button
+                                            onClick={handleLogout}
+                                            className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
+                                        >
+                                            Logout
+                                        </button>
+
+                                        {/*replace when finish user profile/dashboard*/}
+                                        <NavLink to="/myquizzes" className="bg-blue-700 pt-2 pb-2 border hover:text-white hover:border hover:border-white focus:text-white focus:border-white">See your quizzes</NavLink>
+                                    </>
                                 )
                             }
 
-                            <NavLink to="/" className="bg-blue-700 pt-2 pb-2 border hover:text-white hover:border hover:border-white focus:text-white focus:border-white">Create your quiz</NavLink>
+                            <NavLink to="/quiz/create" className="bg-blue-700 pt-2 pb-2 border hover:text-white hover:border hover:border-white focus:text-white focus:border-white">Create your quiz</NavLink>
                         </div>
                     </div>
                 </div>
