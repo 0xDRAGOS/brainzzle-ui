@@ -88,7 +88,7 @@ export default function ViewQuiz() {
                                             <input
                                                 type="checkbox"
                                                 checked={answer.isCorrect}
-                                                disabled  // Read-only
+                                                disabled
                                                 className="rounded focus:ring focus:ring-blue-500 mr-2"
                                             />
                                             <p className="text-gray-400">{answer.answerText}</p>

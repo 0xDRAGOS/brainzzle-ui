@@ -44,7 +44,7 @@ export default function Login() {
             }
 
             const userData = await response.json();
-            console.log(userData);
+
             if (userData.token) {
                 localStorage.setItem('token', userData.token);
                 localStorage.setItem('role', userData.role);
@@ -54,7 +54,6 @@ export default function Login() {
                 setError(userData.message);
             }
         } catch (error) {
-            console.error("Error fetching user:", error);
             setError(error.message);
             setTimeout(() => {
                 setError('');

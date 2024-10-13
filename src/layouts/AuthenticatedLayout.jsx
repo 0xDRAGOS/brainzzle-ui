@@ -1,18 +1,26 @@
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 import NavLink from '../components/NavLink.jsx';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebookF, faTwitter, faInstagram, faLinkedinIn } from '@fortawesome/free-brands-svg-icons';
-import {useContext} from "react";
+import {useContext, useEffect} from "react";
 import {AuthContext} from "../context/AuthContext.jsx";
+import {handleLogout, isTokenValid} from "../utils/AuthUtils.js";
 
 export default function AuthenticatedLayout({ header, children }) {
     const { isAuthenticated, setIsAuthenticated } = useContext(AuthContext);
+    const navigate = useNavigate();
 
-    const handleLogout = () => {
-        localStorage.removeItem('token')
-        localStorage.removeItem('role')
-        setIsAuthenticated(false);
-    }
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+
+        if (!token || !isTokenValid(token)) {
+            setIsAuthenticated(false);
+            localStorage.removeItem('token');
+            localStorage.removeItem('role');
+            navigate('/login');
+        }
+    }, [isAuthenticated, setIsAuthenticated, navigate]);
+
 
     return (
         <div className="min-h-screen flex flex-col bg-slate-900">
@@ -36,7 +44,7 @@ export default function AuthenticatedLayout({ header, children }) {
                                     <>
                                         <NavLink to="/profile">Profile</NavLink>
                                         <button
-                                            onClick={handleLogout}
+                                            onClick={() => handleLogout(setIsAuthenticated)}
                                             className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 transition"
                                         >
                                             Logout

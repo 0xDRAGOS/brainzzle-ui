@@ -1,4 +1,3 @@
-// register page constants
 const REGEX = {
     firstName: /^[a-zA-Z]+$/,
     lastName: /^[a-zA-Z]+$/,

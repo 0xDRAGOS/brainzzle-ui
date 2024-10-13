@@ -6,6 +6,7 @@ import ViewQuiz from "./pages/Quiz/ViewQuiz.jsx";
 import CreateQuiz from "./pages/Quiz/CreateQuiz.jsx";
 import UpdateQuiz from "./pages/Quiz/UpdateQuiz.jsx";
 import MyQuizzes from "./pages/Quiz/MyQuizzes.jsx";
+import PlayQuiz from "./pages/Quiz/PlayQuiz.jsx";
 
 function App() {
 
@@ -17,6 +18,7 @@ function App() {
             <Route path="/quiz/view/:quizId" element={<ViewQuiz/>}/>
             <Route path="/quiz/create" element={<CreateQuiz/>}/>
             <Route path="/quiz/update/:quizId" element={<UpdateQuiz/>}/>
+            <Route path="/quiz/play/:quizId" element={<PlayQuiz/>}/>
             <Route path="/myquizzes" element={<MyQuizzes/>}/>
         </Routes>
   )
