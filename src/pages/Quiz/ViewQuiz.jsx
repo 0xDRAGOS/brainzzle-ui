@@ -2,6 +2,7 @@ import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.jsx";
 import {useContext, useEffect, useState} from "react";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import {useNavigate, useParams} from "react-router-dom";
+import {APP_API_URL} from "../../config.js";
 
 export default function ViewQuiz() {
     const { isAuthenticated } = useContext(AuthContext);
@@ -14,7 +15,7 @@ export default function ViewQuiz() {
         const token = localStorage.getItem('token');
         const fetchQuizData = async () => {
             try {
-                const response = await fetch(`http://localhost:8080/quiz/${quizId}`, {
+                const response = await fetch(`${APP_API_URL}/quiz/${quizId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
@@ -61,7 +62,7 @@ export default function ViewQuiz() {
 
     return (
         <AuthenticatedLayout header={`Quiz: ${quizData.title}`}>
-            <div className="flex justify-center items-center min-h-screen text-gray-300 my-8">
+            <div className="flex justify-center items-center min-h-screen text-gray-300 my-8 mx-2">
                 <div className="w-full max-w-4xl p-8 bg-slate-950 rounded-xl shadow-2xl">
                     {
                         error && <p className="text-center text-red-500 font-bold py-2 bg-slate-800 rounded mb-4">{error}</p>

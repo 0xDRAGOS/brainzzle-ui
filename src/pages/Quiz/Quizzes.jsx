@@ -2,9 +2,9 @@ import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext.jsx";
 import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.jsx";
 import QuizList from "./partials/QuizList.jsx";
-import {APP_API_URL} from "../../config.js";
+import {APP_API_URL} from "../../config.js"
 
-export default function MyQuizzes() {
+export default function Quizzes() {
     const { isAuthenticated } = useContext(AuthContext);
     const [quizzes, setQuizzes] = useState([]);
     const [error, setError] = useState('');
@@ -16,7 +16,8 @@ export default function MyQuizzes() {
         const token = localStorage.getItem('token');
 
         try {
-            const response = await fetch(`${APP_API_URL}/quiz/summaries?page=${page}&size=${quizzesPerPage}`, {
+            console.log(APP_API_URL)
+            const response = await fetch(`${APP_API_URL}/quiz/get-all/summaries?page=${page}&size=${quizzesPerPage}`, {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -59,6 +60,8 @@ export default function MyQuizzes() {
     };
 
     return (
+        <AuthenticatedLayout header="Explore Quizzes">
+            {isAuthenticated ? (
                 <div className="flex justify-center items-center min-h-screen text-gray-300 my-8">
                     <QuizList
                         quizzes={quizzes}
@@ -69,5 +72,11 @@ export default function MyQuizzes() {
                         onPreviousPage={handlePreviousPage}
                     />
                 </div>
-    )
+            ) : (
+                <p className="text-gray-300 text-center text-2xl font-bold py-2 bg-slate-900 rounded mb-4">
+                    You need to be logged in to view quizzes.
+                </p>
+            )}
+        </AuthenticatedLayout>
+    );
 }

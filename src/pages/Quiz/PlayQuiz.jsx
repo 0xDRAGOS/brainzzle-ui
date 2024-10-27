@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.jsx";
 import { AuthContext } from '../../context/AuthContext.jsx';
+import {APP_API_URL} from "../../config.js";
 
 export default function PlayQuiz() {
     const { quizId } = useParams();
@@ -72,7 +73,7 @@ export default function PlayQuiz() {
 
         try {
             const token = localStorage.getItem('token');
-            const response = await fetch(`http://localhost:8080/quiz/${quizId}/submit`, {
+            const response = await fetch(`${APP_API_URL}/quiz/${quizId}/submit`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -116,7 +117,7 @@ export default function PlayQuiz() {
 
     return (
         <AuthenticatedLayout header={`Play Quiz: ${quizData.title}`}>
-            <div className="flex justify-center items-center min-h-screen text-gray-300 my-8">
+            <div className="flex justify-center items-center min-h-screen text-gray-300 my-8 mx-2">
                 <div className="w-full max-w-4xl p-8 bg-slate-950 rounded-xl shadow-2xl">
                     {error && (
                         <p className="text-center text-red-500 font-bold py-2 bg-slate-800 rounded mb-4">
