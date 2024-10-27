@@ -17,7 +17,7 @@ export default function PlayQuiz() {
         const fetchQuizData = async () => {
             const token = localStorage.getItem('token');
             try {
-                const response = await fetch(`http://localhost:8080/quiz/details/${quizId}`, {
+                const response = await fetch(`${APP_API_URL}/quiz/details/${quizId}`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
