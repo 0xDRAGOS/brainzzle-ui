@@ -2,7 +2,8 @@ import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.jsx";
 import {useContext, useState} from "react";
 import {AuthContext} from "../../context/AuthContext.jsx";
 import {useNavigate} from "react-router-dom";
-import QuizForm from "../../components/QuizForm.jsx";
+import QuizForm from "./Partials/QuizForm.jsx";
+import {APP_API_URL} from "../../config.js";
 
 export default function CreateQuiz() {
     const navigate = useNavigate();
@@ -13,6 +14,7 @@ export default function CreateQuiz() {
     const [quizData, setQuizData] = useState({
         title: '',
         description: '',
+        isPublic: false,
         questions: [
             {
                 questionText: '',
@@ -27,15 +29,13 @@ export default function CreateQuiz() {
         ]
     });
 
-    const BASE_URL = `http://localhost:8080/quiz/create`;
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const token = localStorage.getItem('token');
 
         try {
-            const response = await fetch(BASE_URL, {
+            const response = await fetch(`${APP_API_URL}/quiz/create`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -47,12 +47,16 @@ export default function CreateQuiz() {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'An error occurred');
+                setError("Failed to create the quiz.");
+                setTimeout(() => {
+                    setError('');
+                }, 5000);
             }
 
             setQuizData({
                 title: '',
                 description: '',
+                isPublic: false,
                 questions: [
                     {
                         questionText: '',
@@ -78,7 +82,7 @@ export default function CreateQuiz() {
     return (
         <AuthenticatedLayout header="Create your own quiz">
             {isAuthenticated ? (
-                <div className="flex justify-center items-center min-h-screen text-gray-300 my-8">
+                <div className="flex justify-center items-center min-h-screen text-gray-300 my-8 mx-2">
                     <div className="w-full max-w-4xl p-8 bg-slate-950 rounded-xl shadow-2xl">
                         {error && (
                             <p className="text-center text-red-500 font-bold py-2 bg-slate-800 rounded mb-4">{error}</p>

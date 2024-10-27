@@ -1,6 +1,8 @@
-import React from 'react';
+import React, {useState} from 'react';
 
 const QuizForm = ({ quizData, setQuizData, onSubmit, isEditing }) => {
+
+    const [error, setError] = useState('');
     const handleQuizDataChange = (e) => {
         const { name, value } = e.target;
         setQuizData((prevData) => ({
@@ -45,7 +47,8 @@ const QuizForm = ({ quizData, setQuizData, onSubmit, isEditing }) => {
         if (updatedQuestions.length > 1) {
             updatedQuestions.splice(questionIndex, 1);
         } else {
-            console.log('At least one question is required.');
+            setError('At least one question is required.');
+            setTimeout(() => setError(''), 5000);
         }
 
         setQuizData((prevData) => ({
@@ -90,8 +93,19 @@ const QuizForm = ({ quizData, setQuizData, onSubmit, isEditing }) => {
         }));
     };
 
+    const handlePublicChange = (e) => {
+        setQuizData((prevData) => ({
+            ...prevData,
+            isPublic: e.target.checked,
+        }));
+    };
+
     return (
+
         <form onSubmit={onSubmit} className="flex flex-col space-y-6">
+            {error && (
+                <p className="text-center text-red-500 font-bold py-2 bg-slate-800 rounded mb-4">{error}</p>
+            )}
             <div className="flex flex-col w-full">
                 <label className="mb-2 text-lg font-semibold">Quiz Title</label>
                 <input
@@ -112,6 +126,17 @@ const QuizForm = ({ quizData, setQuizData, onSubmit, isEditing }) => {
                     className="p-3 rounded border border-gray-600 bg-slate-800 text-gray-300 focus:ring focus:ring-blue-500 focus:outline-none"
                     rows="4"
                 />
+            </div>
+
+            <div className="flex items-center space-x-2">
+                <input
+                    type="checkbox"
+                    name="isPublic"
+                    checked={quizData.isPublic}
+                    onChange={handlePublicChange}
+                    className="rounded focus:ring focus:ring-blue-500"
+                />
+                <label className="text-lg font-semibold">Make quiz public</label>
             </div>
 
             {quizData.questions.map((question, qIndex) => (
