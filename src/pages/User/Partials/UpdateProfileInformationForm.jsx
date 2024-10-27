@@ -1,7 +1,7 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import {APP_API_URL} from "../../../config.js";
 
-export default function UpdateProfileInformationForm({ user, token }) {
+export default function UpdateProfileInformationForm({ token }) {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
@@ -24,7 +24,10 @@ export default function UpdateProfileInformationForm({ user, token }) {
             });
 
             if (!response.ok) {
-                throw new Error("Failed to update profile information");
+                setError("Failed to update profile information");
+                setTimeout(() => {
+                    setError('');
+                }, 5000);
             }
 
             setSuccess("Profile updated successfully");
