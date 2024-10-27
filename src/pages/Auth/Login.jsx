@@ -38,7 +38,10 @@ export default function Login() {
             });
 
             if (!response.ok) {
-                throw new Error("Failed to fetch data");
+                setError("Failed to fetch data.");
+                setTimeout(() => {
+                    setError('');
+                }, 5000);
             }
 
             const userData = await response.json();

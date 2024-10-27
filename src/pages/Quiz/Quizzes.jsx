@@ -26,7 +26,10 @@ export default function Quizzes() {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to fetch quizzes');
+                setError("Failed to fetch quizzes data.");
+                setTimeout(() => {
+                    setError('');
+                }, 5000);
             }
 
             const data = await response.json();

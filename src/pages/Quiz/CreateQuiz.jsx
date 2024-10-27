@@ -47,7 +47,10 @@ export default function CreateQuiz() {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'An error occurred');
+                setError("Failed to create the quiz.");
+                setTimeout(() => {
+                    setError('');
+                }, 5000);
             }
 
             setQuizData({

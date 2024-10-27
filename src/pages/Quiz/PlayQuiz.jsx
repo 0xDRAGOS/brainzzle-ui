@@ -26,7 +26,10 @@ export default function PlayQuiz() {
                 });
                 const data = await response.json();
                 if (!response.ok) {
-                    throw new Error(data.message || 'Failed to fetch quiz data');
+                    setError("Failed to fetch quiz data.");
+                    setTimeout(() => {
+                        setError('');
+                    }, 5000);
                 }
                 setQuizData(data);
             } catch (error) {
@@ -84,7 +87,10 @@ export default function PlayQuiz() {
 
             const data = await response.json();
             if (!response.ok) {
-                throw new Error(data.message || 'Submission failed');
+                setError("Submission failed.");
+                setTimeout(() => {
+                    setError('');
+                }, 5000);
             }
 
             setResult(data);

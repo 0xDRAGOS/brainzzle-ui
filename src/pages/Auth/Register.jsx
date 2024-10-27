@@ -66,7 +66,10 @@ export default function Register() {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'An error occurred');
+                setError("Failed to register.");
+                setTimeout(() => {
+                    setError('');
+                }, 5000);
             }
 
             setFormData({

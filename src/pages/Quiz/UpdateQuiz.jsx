@@ -43,7 +43,10 @@ export default function UpdateQuiz() {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    throw new Error(data.message || 'Failed to fetch quiz data');
+                    setError("Failed to fetch the quiz data.");
+                    setTimeout(() => {
+                        setError('');
+                    }, 5000);
                 }
 
                 setQuizData(data);
@@ -56,15 +59,13 @@ export default function UpdateQuiz() {
         fetchQuizData();
     }, [quizId]);
 
-    const BASE_URL = `http://localhost:8080/quiz/update/${quizId}`
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         const token = localStorage.getItem('token');
 
         try {
-            const response = await fetch(BASE_URL, {
+            const response = await fetch(`${APP_API_URL}/quiz/update/${quizId}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
@@ -76,7 +77,10 @@ export default function UpdateQuiz() {
             const data = await response.json();
 
             if (!response.ok) {
-                throw new Error(data.message || 'An error occurred');
+                setError("Failed to update the quiz.");
+                setTimeout(() => {
+                    setError('');
+                }, 5000);
             }
 
             alert('Quiz updated successfully');

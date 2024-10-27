@@ -25,7 +25,10 @@ export default function ViewQuiz() {
                 const data = await response.json();
 
                 if (!response.ok) {
-                    throw new Error(data.message || 'Failed to fetch quiz data');
+                    setError("Failed to fetch quiz data.");
+                    setTimeout(() => {
+                        setError('');
+                    }, 5000);
                 }
 
                 setQuizData(data);
