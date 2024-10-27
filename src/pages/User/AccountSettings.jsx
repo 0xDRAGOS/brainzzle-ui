@@ -1,9 +1,7 @@
 import DeleteUserForm from "./partials/DeleteUserForm.jsx";
 import UpdatePasswordForm from "./partials/UpdatePasswordForm.jsx";
 import UpdateProfileInformationForm from "./partials/UpdateProfileInformationForm.jsx";
-import { useContext } from "react";
-import { AuthContext } from "../../context/AuthContext.jsx";
-import {json, useNavigate} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 
 export default function AccountSettings({ user }) {
     const navigate = useNavigate();

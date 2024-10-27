@@ -22,7 +22,10 @@ export default function DeleteUserForm({ userId, token }) {
             });
 
             if (!response.ok) {
-                throw new Error("Failed to delete account");
+                setError("Failed to delete the account.");
+                setTimeout(() => {
+                    setError('');
+                }, 5000);
             }
 
             setIsAuthenticated(false);

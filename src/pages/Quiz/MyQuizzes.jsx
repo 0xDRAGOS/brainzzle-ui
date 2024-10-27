@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 import { AuthContext } from "../../context/AuthContext.jsx";
-import AuthenticatedLayout from "../../layouts/AuthenticatedLayout.jsx";
 import QuizList from "./partials/QuizList.jsx";
 import {APP_API_URL} from "../../config.js";
 
@@ -25,7 +24,10 @@ export default function MyQuizzes() {
             });
 
             if (!response.ok) {
-                throw new Error('Failed to fetch quizzes');
+                setError("Failed to fetch quizzes.");
+                setTimeout(() => {
+                    setError('');
+                }, 5000);
             }
 
             const data = await response.json();

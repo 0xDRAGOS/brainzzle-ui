@@ -23,7 +23,10 @@ export default function UpdatePasswordForm({ userId, token }) {
             });
 
             if (!response.ok) {
-                throw new Error("Failed to update password");
+                setError("Failed to update the password.");
+                setTimeout(() => {
+                    setError('');
+                }, 5000);
             }
 
             setSuccess("Password updated successfully");
