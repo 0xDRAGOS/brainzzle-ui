@@ -77,7 +77,7 @@ export default function UpdateQuiz() {
             const data = await response.json();
 
             if (!response.ok) {
-                setError("Failed to update the quiz.");
+                setError("Failed to update the quiz: " + data.message);
                 setTimeout(() => {
                     setError('');
                 }, 5000);
